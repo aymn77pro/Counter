@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.example.counter.databinding.FragmentMainCountBinding
 
@@ -12,37 +13,39 @@ class MainCount : Fragment() {
 private var _binding : FragmentMainCountBinding?=null
 val binding  get() =  _binding
 
-    private val viewModle : countViewModle by viewModels()
+    private val viewModle : CountViewModle by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMainCountBinding.inflate(inflater,container,false)
+        //_binding = FragmentMainCountBinding.inflate(inflater,container,false)
+        _binding = DataBindingUtil.inflate(inflater,R.layout.fragment_main_count,container,false)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        upDateScore()
+        super.onViewCreated(view, savedInstanceState)
+       binding?.countViewModle = viewModle
+        binding?.lifecycleOwner = viewLifecycleOwner
+
 
         binding?.addOne?.setOnClickListener {
             viewModle.plusOne()
-            upDateScore()
         }
         binding?.add4?.setOnClickListener {
             viewModle.plusFour()
-            upDateScore()
+
         }
         binding?.Take2?.setOnClickListener {
             viewModle.TakeTwo()
-            upDateScore()
+
         }
 
         }
-    private fun upDateScore(){
-        binding?.textView?.text = viewModle.score.toString()
-    }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
