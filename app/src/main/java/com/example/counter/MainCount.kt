@@ -25,6 +25,7 @@ val binding  get() =  _binding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         upDateScore()
+
         binding?.addOne?.setOnClickListener {
             viewModle.plusOne()
             upDateScore()
